@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Менеджер Фінансів</string>
+    <string name="add_transaction">Додати транзакцію</string>
+    <string name="amount">Сума</string>
+    <string name="category">Категорія</string>
+    <string name="save">Зберегти</string>
+</resources>

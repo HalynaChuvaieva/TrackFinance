@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TrackFinance</string>
+    <string name="app_name">Finance Manager</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="save">Save</string>
 </resources>
