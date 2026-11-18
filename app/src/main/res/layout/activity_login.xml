@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F7FA"
+        android:padding="32dp">
+
+    <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вхід у Finance Manager"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/etPin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStart="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_marginBottom="32dp"/>
+
+    <EditText
+            android:id="@+id/etPin"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:hint="Введіть 4-значний PIN"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:background="@android:drawable/edit_text"
+            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStart="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
+            android:layout_marginBottom="16dp"/>
+
+    <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="Увійти"
+            app:layout_constraintBottom_toTopOf="@+id/btnBiometric"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStart="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPin"
+            android:layout_marginBottom="16dp"/>
+
+    <Button
+            android:id="@+id/btnBiometric"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="Увійти за відбитком пальця"
+            app:icon="@android:drawable/ic_secure"
+            app:iconGravity="textStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStart="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
