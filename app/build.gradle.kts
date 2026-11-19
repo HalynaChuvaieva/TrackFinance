@@ -1,11 +1,12 @@
 plugins {
     id("com.android.application")
+    id("com.android.legacy-kapt")
 }
 
 android {
     namespace = "com.example.trackfinance"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
@@ -43,7 +44,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.8.5")
     implementation("androidx.room:room-ktx:2.8.5")
-    annotationProcessor("androidx.room:room-compiler:2.8.5")
+    kapt("androidx.room:room-compiler:2.8.5")
 
     // Біометрія (відбиток пальця / FaceID)
     implementation("androidx.biometric:biometric:1.1.0")
