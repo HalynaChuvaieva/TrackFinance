@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Менеджер Фінансів</string>
-    <string name="add_transaction">Додати транзакцію</string>
-    <string name="amount">Сума</string>
-    <string name="category">Категорія</string>
-    <string name="save">Зберегти</string>
+    <string name="greeting">Привіт, %1$s ✎</string>
+    <string name="total_balance">Загальний баланс</string>
+    <string name="spendings_overview">Огляд витрат</string>
+    <string name="recent_transactions">Останні транзакції</string>
+    <string name="chart_legend">Доходи (зелений) / Витрати (червоний)</string>
+    <string name="change_name_title">Змінити ім\'я</string>
+    <string name="enter_name_hint">Введіть ваше ім\'я</string>
+    <string name="new_transaction">Нова транзакція</string>
+    <string name="edit_transaction">Редагувати транзакцію</string>
+    <string name="category_hint">Категорія (напр. Продукти, Зарплата)</string>
+    <string name="amount_hint">Сума</string>
+    <string name="type_income">Дохід</string>
+    <string name="type_expense">Витрата</string>
+    <string name="btn_save">Зберегти</string>
+    <string name="btn_add">Додати</string>
+    <string name="btn_delete">Видалити</string>
+    <string name="btn_cancel">Скасувати</string>
+    <string name="invalid_input">Введіть коректну категорію та суму</string>
 </resources>

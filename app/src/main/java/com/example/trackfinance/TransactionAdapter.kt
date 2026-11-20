@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
-class TransactionAdapter(private var items: List<Transaction>) :
-    RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import java.util.Locale
+class TransactionAdapter(
+    private var items: List<Transaction>,
+    private val onItemClick: (Transaction) -> Unit
+) : Adapter<TransactionAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvCategory: TextView = view.findViewById(R.id.tvCategory)
@@ -30,6 +33,9 @@ class TransactionAdapter(private var items: List<Transaction>) :
         } else {
             holder.tvAmount.text = "-$ %.2f".format(item.amount)
             holder.tvAmount.setTextColor(Color.parseColor("#C62828"))
+        }
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
         }
     }
 

@@ -8,11 +8,10 @@ import androidx.room.Update
 
 @Dao
 interface TransactionDao {
-    // Додавання транзакції
     @Insert
     fun insert(transaction: Transaction)
-
-    // Видалення
+    @Update
+    fun update(transaction: Transaction)
     @Delete
     fun delete(transaction: Transaction)
 

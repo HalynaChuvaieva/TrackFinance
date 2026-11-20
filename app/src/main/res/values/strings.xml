@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">Finance Manager</string>
-    <string name="add_transaction">Add Transaction</string>
-    <string name="amount">Amount</string>
-    <string name="category">Category</string>
-    <string name="save">Save</string>
+    <string name="greeting">Hi, %1$s ✎</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="spendings_overview">Spendings Overview</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="chart_legend">Income (green) / Expenses (red)</string>
+    <string name="change_name_title">Change Name</string>
+    <string name="enter_name_hint">Enter your name</string>
+    <string name="new_transaction">New Transaction</string>
+    <string name="edit_transaction">Edit Transaction</string>
+    <string name="category_hint">Category (e.g. Food, Salary)</string>
+    <string name="amount_hint">Amount</string>
+    <string name="type_income">Income</string>
+    <string name="type_expense">Expense</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="invalid_input">Enter a valid category and amount</string>
 </resources>
