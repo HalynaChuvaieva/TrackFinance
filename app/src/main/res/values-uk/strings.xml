@@ -19,4 +19,14 @@
     <string name="btn_delete">Видалити</string>
     <string name="btn_cancel">Скасувати</string>
     <string name="invalid_input">Введіть коректну категорію та суму</string>
+    <string name="budget_limit_title">Місячний ліміт витрат</string>
+    <string name="budget_spent_format">Витрачено: $ %.2f / $ %.2f</string>
+    <string name="budget_exceeded">⚠️ Ліміт бюджету перевищено!</string>
+    <string name="set_budget_title">Встановити ліміт</string>
+    <string name="set_budget_hint">Введіть суму ліміту</string>
+    <string name="share_report_title">Поділитися фінансовим звітом</string>
+    <string name="transaction_deleted">Транзакцію видалено</string>
+    <string name="btn_undo">Скасувати</string>
+    <string name="privacy_enabled">Режим приватності увімкнено</string>
+    <string name="privacy_disabled">Режим приватності вимкнено</string>
 </resources>

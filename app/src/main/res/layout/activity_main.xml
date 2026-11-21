@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <!-- Верхня панель: Привітання + Тема + Мова -->
+            <!-- Верхня панель: Привітання + Приватність + Експорт + Тема + Мова -->
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,37 +33,59 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Hi, User"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary" />
+
+                <Button
+                        android:id="@+id/btnPrivacy"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="👁️"
+                        android:textSize="13sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="8dp"
+                        android:layout_marginEnd="4dp" />
+
+                <Button
+                        android:id="@+id/btnShare"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="📤"
+                        android:textSize="13sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="8dp"
+                        android:layout_marginEnd="4dp" />
 
                 <Button
                         android:id="@+id/btnTheme"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="38dp"
                         android:text="🌙"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:minWidth="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginEnd="8dp" />
+                        android:paddingHorizontal="8dp"
+                        android:layout_marginEnd="4dp" />
 
                 <Button
                         android:id="@+id/btnLanguage"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:text="UA / EN"
-                        android:textSize="12sp"
+                        android:layout_height="38dp"
+                        android:text="UA/EN"
+                        android:textSize="11sp"
                         android:minWidth="0dp"
-                        android:paddingHorizontal="12dp" />
+                        android:paddingHorizontal="8dp" />
             </LinearLayout>
 
             <!-- Синя картка загального балансу -->
             <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="16dp"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="6dp"
                     app:cardBackgroundColor="#29B6F6">
@@ -73,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
-                        android:paddingVertical="36dp"
+                        android:paddingVertical="32dp"
                         android:paddingHorizontal="20dp">
 
                     <TextView
@@ -92,6 +114,67 @@
                             android:textColor="@android:color/white"
                             android:textSize="36sp"
                             android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Картка ліміту витрат (клікабельна для зміни ліміту) -->
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/card_bg">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                        <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/budget_limit_title"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:textColor="@color/text_primary" />
+
+                        <TextView
+                                android:id="@+id/tvBudgetStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$ 0 / $ 1000"
+                                android:textSize="13sp"
+                                android:textColor="@color/text_primary" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                            android:id="@+id/progressBudget"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:max="100"
+                            android:progress="0" />
+
+                    <TextView
+                            android:id="@+id/tvBudgetWarning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/budget_exceeded"
+                            android:textColor="#EF5350"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="6dp"
+                            android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

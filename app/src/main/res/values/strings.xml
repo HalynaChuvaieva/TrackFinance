@@ -18,4 +18,14 @@
     <string name="btn_delete">Delete</string>
     <string name="btn_cancel">Cancel</string>
     <string name="invalid_input">Enter a valid category and amount</string>
+    <string name="budget_limit_title">Monthly Budget Limit</string>
+    <string name="budget_spent_format">Spent: $ %.2f / $ %.2f</string>
+    <string name="budget_exceeded">Budget limit exceeded!</string>
+    <string name="set_budget_title">Set Monthly Limit</string>
+    <string name="set_budget_hint">Enter limit amount</string>
+    <string name="share_report_title">Share Financial Report</string>
+    <string name="transaction_deleted">Transaction deleted</string>
+    <string name="btn_undo">Undo</string>
+    <string name="privacy_enabled">Privacy mode enabled</string>
+    <string name="privacy_disabled">Privacy mode disabled</string>
 </resources>
