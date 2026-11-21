@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var barChart: BarChart
     private lateinit var btnPrivacy: Button
     private lateinit var rootView: View
-
-    // Сенсор для струсу (Режим приватності)
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
     private var lastShakeTime: Long = 0L
@@ -91,15 +89,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         tvGreeting.text = getString(R.string.greeting, savedName)
         tvGreeting.setOnClickListener { showChangeNameDialog(prefs) }
 
-        // 1. Фішка: Режим приватності (кнопка + акселерометр)
+        // Режим приватності
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         btnPrivacy.setOnClickListener { togglePrivacyMode(prefs) }
 
-        // 2. Фішка: Налаштування ліміту бюджету по кліку
+        // Налаштування ліміту бюджету по кліку
         cardBudget.setOnClickListener { showSetBudgetDialog(prefs) }
 
-        // 3. Фішка: Експорт фінансового звіту
+        //  Експорт фінансового звіту
         btnShare.setOnClickListener { shareFinancialReport() }
 
         // Перемикач теми
@@ -130,7 +128,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         rvTransactions.layoutManager = LinearLayoutManager(this)
         rvTransactions.adapter = adapter
 
-        // 4. Фішка: Свайп вліво для видалення + Snackbar Undo
+        //  Свайп вліво для видалення
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -208,20 +206,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun updateDashboard() {
-        val dao = db.transactionDao()
-        val transactions = dao.getAllTransactions()
-        val totalIncome = dao.getTotalIncome() ?: 0.0
-        val totalExpenses = dao.getTotalExpenses() ?: 0.0
-        val balance = totalIncome - totalExpenses
+        val transactions = db.transactionDao().getAllTransactions()
+        val totalIncome = FinanceUtils.calculateTotalIncome(transactions)
+        val totalExpenses = FinanceUtils.calculateTotalExpenses(transactions)
+        val balance = FinanceUtils.calculateBalance(transactions)
 
-        // Баланс із урахуванням приватності
         btnPrivacy.text = if (isPrivacyMode) "🙈" else "👁️"
         tvTotalBalance.text = if (isPrivacyMode) "$ ****" else "$ %.2f".format(balance)
         adapter.updateData(transactions)
 
-        // Оновлення прогрес-бару ліміту витрат
-        val percent = if (monthlyBudgetLimit > 0) ((totalExpenses / monthlyBudgetLimit) * 100).toInt() else 0
-        progressBudget.progress = percent.coerceIn(0, 100)
+        val percent = FinanceUtils.calculateBudgetPercent(totalExpenses, monthlyBudgetLimit)
+        val isExceeded = FinanceUtils.isBudgetExceeded(totalExpenses, monthlyBudgetLimit)
+
+        progressBudget.progress = percent
         tvBudgetStatus.text = if (isPrivacyMode) {
             "**** / ****"
         } else {
@@ -229,18 +226,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
 
         val barColor = when {
-            percent >= 90 -> Color.parseColor("#EF5350") // Червоний
-            percent >= 70 -> Color.parseColor("#FFA726") // Жовтий
-            else -> Color.parseColor("#4CAF50")          // Зелений
+            percent >= 90 -> Color.parseColor("#EF5350")
+            percent >= 70 -> Color.parseColor("#FFA726")
+            else -> Color.parseColor("#4CAF50")
         }
         progressBudget.progressTintList = ColorStateList.valueOf(barColor)
-        tvBudgetWarning.visibility = if (totalExpenses > monthlyBudgetLimit && !isPrivacyMode) View.VISIBLE else View.GONE
+        tvBudgetWarning.visibility = if (isExceeded && !isPrivacyMode) View.VISIBLE else View.GONE
 
-        if (totalExpenses > monthlyBudgetLimit) {
+        if (isExceeded) {
             FinanceLogger.warning("Budget limit exceeded: $totalExpenses / $monthlyBudgetLimit")
         }
 
-        // Графік
         if (totalIncome == 0.0 && totalExpenses == 0.0) {
             barChart.clear()
             barChart.invalidate()
@@ -271,25 +267,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun shareFinancialReport() {
-        val dao = db.transactionDao()
-        val transactions = dao.getAllTransactions()
-        val totalIncome = dao.getTotalIncome() ?: 0.0
-        val totalExpenses = dao.getTotalExpenses() ?: 0.0
-        val balance = totalIncome - totalExpenses
+        val transactions = db.transactionDao().getAllTransactions()
+        val totalIncome = FinanceUtils.calculateTotalIncome(transactions)
+        val totalExpenses = FinanceUtils.calculateTotalExpenses(transactions)
 
-        val report = buildString {
-            appendLine("=== Finance Manager Report ===")
-            appendLine("Total Balance: $ %.2f".format(balance))
-            appendLine("Total Income: +$ %.2f".format(totalIncome))
-            appendLine("Total Expenses: -$ %.2f".format(totalExpenses))
-            appendLine("Monthly Limit: $ %.2f".format(monthlyBudgetLimit))
-            appendLine()
-            appendLine("--- Transactions ---")
-            transactions.forEach { t ->
-                val sign = if (t.isIncome) "+" else "-"
-                appendLine("${t.category}: $sign$ %.2f".format(t.amount))
-            }
-        }
+        val report = FinanceUtils.formatReport(transactions, totalIncome, totalExpenses, monthlyBudgetLimit)
 
         FinanceLogger.info("Exporting financial report (${transactions.size} items)")
         val intent = Intent(Intent.ACTION_SEND).apply {
@@ -392,20 +374,21 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 val amount = etAmount.text.toString().toDoubleOrNull()
                 val isIncome = rbIncome.isChecked
 
-                if (category.isEmpty() || amount == null || amount <= 0) {
+                if (!FinanceUtils.isValidTransaction(category, amount)) {
                     FinanceLogger.warning("Invalid transaction input: category='$category', amount='$amount'")
                     Toast.makeText(this, getString(R.string.invalid_input), Toast.LENGTH_SHORT).show()
                 } else {
+                    val validAmount = amount!!
                     if (existing == null) {
                         db.transactionDao().insert(
-                            Transaction(amount = amount, category = category, isIncome = isIncome)
+                            Transaction(amount = validAmount, category = category, isIncome = isIncome)
                         )
-                        FinanceLogger.info("Added transaction: $category ($amount, income=$isIncome)")
+                        FinanceLogger.info("Added transaction: $category ($validAmount, income=$isIncome)")
                     } else {
                         db.transactionDao().update(
-                            existing.copy(amount = amount, category = category, isIncome = isIncome)
+                            existing.copy(amount = validAmount, category = category, isIncome = isIncome)
                         )
-                        FinanceLogger.info("Updated transaction: $category ($amount, income=$isIncome)")
+                        FinanceLogger.info("Updated transaction: $category ($validAmount, income=$isIncome)")
                     }
                     updateDashboard()
                 }
