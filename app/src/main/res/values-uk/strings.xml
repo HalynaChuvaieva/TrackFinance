@@ -29,4 +29,19 @@
     <string name="btn_undo">Скасувати</string>
     <string name="privacy_enabled">Режим приватності увімкнено</string>
     <string name="privacy_disabled">Режим приватності вимкнено</string>
+
+
+    <string name="forgot_pin">Забули PIN-код?</string>
+    <string name="set_secret_word_title">Задайте секретне слово</string>
+    <string name="set_secret_word_msg">Воно знадобиться для відновлення PIN-коду, якщо ви його забудете.</string>
+    <string name="secret_word_hint">Секретне слово</string>
+    <string name="recover_pin_title">Відновлення PIN-коду</string>
+    <string name="new_pin_hint">Новий PIN (4 цифри)</string>
+    <string name="pin_saved">PIN та секретне слово збережено</string>
+    <string name="pin_updated">PIN-код успішно оновлено</string>
+    <string name="pin_length_error">PIN має містити 4 цифри</string>
+    <string name="wrong_pin">Невірний PIN-код</string>
+    <string name="wrong_secret_word">Невірне секретне слово</string>
+    <string name="no_secret_word">Секретне слово ще не встановлено</string>
+    <string name="empty_secret_word">Введіть секретне слово</string>
 </resources>

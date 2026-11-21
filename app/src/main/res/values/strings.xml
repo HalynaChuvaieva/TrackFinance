@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Finance Manager</string>
     <string name="greeting">Hi, %1$s ✎</string>
+
+
     <string name="total_balance">Total Balance</string>
     <string name="spendings_overview">Spendings Overview</string>
     <string name="recent_transactions">Recent Transactions</string>
     <string name="chart_legend">Income (green) / Expenses (red)</string>
+
+
     <string name="change_name_title">Change Name</string>
     <string name="enter_name_hint">Enter your name</string>
+
+
     <string name="new_transaction">New Transaction</string>
     <string name="edit_transaction">Edit Transaction</string>
     <string name="category_hint">Category (e.g. Food, Salary)</string>
@@ -28,4 +34,20 @@
     <string name="btn_undo">Undo</string>
     <string name="privacy_enabled">Privacy mode enabled</string>
     <string name="privacy_disabled">Privacy mode disabled</string>
+
+
+
+    <string name="forgot_pin">Forgot PIN?</string>
+    <string name="set_secret_word_title">Set Secret Word</string>
+    <string name="set_secret_word_msg">This word will be used to recover your PIN if you forget it.</string>
+    <string name="secret_word_hint">Secret word</string>
+    <string name="recover_pin_title">Recover PIN</string>
+    <string name="new_pin_hint">New PIN (4 digits)</string>
+    <string name="pin_saved">PIN and secret word saved</string>
+    <string name="pin_updated">PIN successfully updated</string>
+    <string name="pin_length_error">PIN must be 4 digits</string>
+    <string name="wrong_pin">Incorrect PIN</string>
+    <string name="wrong_secret_word">Incorrect secret word</string>
+    <string name="no_secret_word">No secret word set yet</string>
+    <string name="empty_secret_word">Please enter a secret word</string>
 </resources>
