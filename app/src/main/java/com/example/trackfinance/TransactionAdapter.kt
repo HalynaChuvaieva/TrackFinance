@@ -15,39 +15,6 @@ class TransactionAdapter(
 
     private var isPrivacyMode: Boolean = false
 
-    private val uaToEn = mapOf(
-        "зарплата" to "Salary",
-        "продукти" to "Groceries",
-        "їжа" to "Food",
-        "транспорт" to "Transport",
-        "кафе" to "Cafe",
-        "розваги" to "Entertainment",
-        "комунальні" to "Utilities",
-        "одяг" to "Clothes",
-        "здоров'я" to "Health",
-        "подарунки" to "Gifts",
-        "стипендія" to "Scholarship"
-    )
-    private val enToUa = mapOf(
-        "salary" to "Зарплата",
-        "groceries" to "Продукти",
-        "food" to "Їжа",
-        "transport" to "Транспорт",
-        "cafe" to "Кафе",
-        "entertainment" to "Розваги",
-        "utilities" to "Комунальні",
-        "clothes" to "Одяг",
-        "health" to "Здоров'я",
-        "gifts" to "Подарунки",
-        "scholarship" to "Стипендія"
-    )
-
-    private fun translateCategory(raw: String): String {
-        val lang = Locale.getDefault().language
-        val key = raw.trim().lowercase()
-        return if (lang == "uk") enToUa[key] ?: raw else uaToEn[key] ?: raw
-    }
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvCategory: TextView = view.findViewById(R.id.tvCategory)
         val tvAmount: TextView = view.findViewById(R.id.tvAmount)
@@ -61,7 +28,7 @@ class TransactionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.tvCategory.text = translateCategory(item.category)
+        holder.tvCategory.text = FinanceUtils.translateCategory(item.category, Locale.getDefault().language)
 
         if (isPrivacyMode) {
             holder.tvAmount.text = "$ ****"

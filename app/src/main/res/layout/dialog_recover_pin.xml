@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="12dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@color/card_bg">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="26dp">
+
+        <TextView
+                android:id="@+id/tvDialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_pin_title"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent_purple"
+                android:layout_marginBottom="6dp" />
+
+        <TextView
+                android:id="@+id/tvDialogSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_secret_word_msg"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
+        <EditText
+                android:id="@+id/etDialogSecret"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_input_pill"
+                android:hint="@string/secret_word_hint"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp" />
+
+        <EditText
+                android:id="@+id/etDialogNewPin"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_input_pill"
+                android:hint="@string/new_pin_hint"
+                android:textColorHint="@color/text_secondary"
+                android:textColor="@color/text_primary"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:textSize="15sp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="22dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnDialogCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/bg_pill_outline"
+                    android:text="@string/btn_cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/accent_purple"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="10dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnDialogSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:paddingHorizontal="24dp"
+                    android:background="@drawable/bg_gradient_pill"
+                    android:text="@string/btn_save"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
