@@ -94,6 +94,11 @@ class LoginActivity : AppCompatActivity() {
         btnBiometric.setOnClickListener {
             biometricPrompt.authenticate(promptInfo)
         }
+
+        val cardLogin = findViewById<android.view.View>(R.id.cardLogin)
+        cardLogin.alpha = 0f
+        cardLogin.translationY = 60f
+        cardLogin.animate().alpha(1f).translationY(0f).setDuration(450).start()
     }
 
     private fun showSetSecretWordDialog(newPin: String) {

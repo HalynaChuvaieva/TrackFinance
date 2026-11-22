@@ -158,6 +158,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         fabAdd.setOnClickListener { showTransactionDialog(null) }
 
         updateDashboard()
+
+        val cardBalance = findViewById<View>(R.id.cardBalance)
+        cardBalance.alpha = 0f
+        cardBalance.scaleX = 0.94f
+        cardBalance.scaleY = 0.94f
+        cardBalance.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(400).start()
     }
 
     override fun onResume() {
@@ -172,7 +178,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorManager.unregisterListener(this)
     }
 
-    // Обробка струсу телефону
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             val x = event.values[0]
