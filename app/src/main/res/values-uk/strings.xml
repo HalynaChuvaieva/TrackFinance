@@ -30,7 +30,7 @@
     <string name="privacy_enabled">Режим приватності увімкнено</string>
     <string name="privacy_disabled">Режим приватності вимкнено</string>
 
-
+    <string name="login_title">Вхід у Finance Manager</string>
     <string name="forgot_pin">Забули PIN-код?</string>
     <string name="set_secret_word_title">Задайте секретне слово</string>
     <string name="set_secret_word_msg">Воно знадобиться для відновлення PIN-коду, якщо ви його забудете.</string>

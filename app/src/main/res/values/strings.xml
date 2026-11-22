@@ -36,7 +36,7 @@
     <string name="privacy_disabled">Privacy mode disabled</string>
 
 
-
+    <string name="login_title">Login to Finance Manager</string>
     <string name="forgot_pin">Forgot PIN?</string>
     <string name="set_secret_word_title">Set Secret Word</string>
     <string name="set_secret_word_msg">This word will be used to recover your PIN if you forget it.</string>
