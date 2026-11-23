@@ -291,122 +291,128 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     private fun showSetBudgetDialog(prefs: android.content.SharedPreferences) {
-        val input = EditText(this).apply {
-            hint = getString(R.string.set_budget_hint)
-            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            setText(monthlyBudgetLimit.toString())
+        val dialogView = layoutInflater.inflate(R.layout.dialog_styled_form, null)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvModalTitle)
+        val etLimit = dialogView.findViewById<EditText>(R.id.etModalFirst)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnModalCancel)
+        val btnSave = dialogView.findViewById<Button>(R.id.btnModalSave)
+
+        tvTitle.text = getString(R.string.set_budget_title)
+        etLimit.hint = getString(R.string.set_budget_hint)
+        etLimit.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        etLimit.setText(monthlyBudgetLimit.toString())
+
+        val dialog = AlertDialog.Builder(this).setView(dialogView).create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+        btnSave.setOnClickListener {
+            val newLimit = etLimit.text.toString().toDoubleOrNull()
+            if (newLimit != null && newLimit > 0) {
+                monthlyBudgetLimit = newLimit
+                prefs.edit().putFloat("BUDGET_LIMIT", newLimit.toFloat()).apply()
+                FinanceLogger.info("Budget limit updated to: $newLimit")
+                updateDashboard()
+                dialog.dismiss()
+            }
         }
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.set_budget_title))
-            .setView(input)
-            .setPositiveButton(getString(R.string.btn_save)) { _, _ ->
-                val newLimit = input.text.toString().toDoubleOrNull()
-                if (newLimit != null && newLimit > 0) {
-                    monthlyBudgetLimit = newLimit
-                    prefs.edit().putFloat("BUDGET_LIMIT", newLimit.toFloat()).apply()
-                    FinanceLogger.info("Budget limit updated to: $newLimit")
-                    updateDashboard()
-                }
-            }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
-            .show()
+        dialog.show()
     }
 
     private fun showChangeNameDialog(prefs: android.content.SharedPreferences) {
-        val input = EditText(this).apply {
-            hint = getString(R.string.enter_name_hint)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_styled_form, null)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvModalTitle)
+        val etName = dialogView.findViewById<EditText>(R.id.etModalFirst)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnModalCancel)
+        val btnSave = dialogView.findViewById<Button>(R.id.btnModalSave)
+
+        tvTitle.text = getString(R.string.change_name_title)
+        etName.hint = getString(R.string.enter_name_hint)
+
+        val dialog = AlertDialog.Builder(this).setView(dialogView).create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+        btnSave.setOnClickListener {
+            val newName = etName.text.toString().trim()
+            if (newName.isNotEmpty()) {
+                prefs.edit().putString("USER_NAME", newName).apply()
+                tvGreeting.text = getString(R.string.greeting, newName)
+                FinanceLogger.info("Username updated to: $newName")
+                dialog.dismiss()
+            }
         }
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.change_name_title))
-            .setView(input)
-            .setPositiveButton(getString(R.string.btn_save)) { _, _ ->
-                val newName = input.text.toString().trim()
-                if (newName.isNotEmpty()) {
-                    prefs.edit().putString("USER_NAME", newName).apply()
-                    tvGreeting.text = getString(R.string.greeting, newName)
-                    FinanceLogger.info("Username updated to: $newName")
-                }
-            }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
-            .show()
+        dialog.show()
     }
 
     private fun showTransactionDialog(existing: Transaction?) {
-        val layout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(48, 24, 48, 0)
-        }
+        val dialogView = layoutInflater.inflate(R.layout.dialog_styled_form, null)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvModalTitle)
+        val etCategory = dialogView.findViewById<EditText>(R.id.etModalFirst)
+        val etAmount = dialogView.findViewById<EditText>(R.id.etModalSecond)
+        val rgType = dialogView.findViewById<RadioGroup>(R.id.rgModalType)
+        val rbExpense = dialogView.findViewById<RadioButton>(R.id.rbModalExpense)
+        val rbIncome = dialogView.findViewById<RadioButton>(R.id.rbModalIncome)
+        val btnDelete = dialogView.findViewById<Button>(R.id.btnModalDelete)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnModalCancel)
+        val btnSave = dialogView.findViewById<Button>(R.id.btnModalSave)
 
-        val etCategory = EditText(this).apply {
-            hint = getString(R.string.category_hint)
-            setText(existing?.category ?: "")
-        }
-        val etAmount = EditText(this).apply {
-            hint = getString(R.string.amount_hint)
-            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-            if (existing != null) setText(existing.amount.toString())
-        }
+        tvTitle.text = if (existing == null) getString(R.string.new_transaction) else getString(R.string.edit_transaction)
+        etCategory.hint = getString(R.string.category_hint)
+        etCategory.setText(existing?.category ?: "")
 
-        val radioGroup = RadioGroup(this).apply {
-            orientation = RadioGroup.HORIZONTAL
-            setPadding(0, 16, 0, 0)
-        }
-        val rbExpense = RadioButton(this).apply {
-            text = getString(R.string.type_expense)
-            setPadding(0, 0, 32, 0)
-        }
-        val rbIncome = RadioButton(this).apply {
-            text = getString(R.string.type_income)
-        }
+        etAmount.visibility = View.VISIBLE
+        etAmount.hint = getString(R.string.amount_hint)
+        if (existing != null) etAmount.setText(existing.amount.toString())
 
-        radioGroup.addView(rbExpense)
-        radioGroup.addView(rbIncome)
-
+        rgType.visibility = View.VISIBLE
         if (existing?.isIncome == true) rbIncome.isChecked = true else rbExpense.isChecked = true
 
-        layout.addView(etCategory)
-        layout.addView(etAmount)
-        layout.addView(radioGroup)
+        btnSave.text = if (existing == null) getString(R.string.btn_add) else getString(R.string.btn_save)
+        if (existing != null) btnDelete.visibility = View.VISIBLE
 
-        val builder = AlertDialog.Builder(this)
-            .setTitle(if (existing == null) getString(R.string.new_transaction) else getString(R.string.edit_transaction))
-            .setView(layout)
-            .setPositiveButton(if (existing == null) getString(R.string.btn_add) else getString(R.string.btn_save)) { _, _ ->
-                val category = etCategory.text.toString().trim()
-                val amount = etAmount.text.toString().toDoubleOrNull()
-                val isIncome = rbIncome.isChecked
+        val dialog = AlertDialog.Builder(this).setView(dialogView).create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                if (!FinanceUtils.isValidTransaction(category, amount)) {
-                    FinanceLogger.warning("Invalid transaction input: category='$category', amount='$amount'")
-                    Toast.makeText(this, getString(R.string.invalid_input), Toast.LENGTH_SHORT).show()
-                } else {
-                    val validAmount = amount!!
-                    if (existing == null) {
-                        db.transactionDao().insert(
-                            Transaction(amount = validAmount, category = category, isIncome = isIncome)
-                        )
-                        FinanceLogger.info("Added transaction: $category ($validAmount, income=$isIncome)")
-                    } else {
-                        db.transactionDao().update(
-                            existing.copy(amount = validAmount, category = category, isIncome = isIncome)
-                        )
-                        FinanceLogger.info("Updated transaction: $category ($validAmount, income=$isIncome)")
-                    }
-                    updateDashboard()
-                }
-            }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
+        btnCancel.setOnClickListener { dialog.dismiss() }
 
-        if (existing != null) {
-            builder.setNeutralButton(getString(R.string.btn_delete)) { _, _ ->
+        btnDelete.setOnClickListener {
+            if (existing != null) {
                 db.transactionDao().delete(existing)
                 FinanceLogger.warning("Deleted transaction via dialog: ${existing.category}")
                 updateDashboard()
+                dialog.dismiss()
             }
         }
 
-        builder.show()
+        btnSave.setOnClickListener {
+            val category = etCategory.text.toString().trim()
+            val amount = etAmount.text.toString().toDoubleOrNull()
+            val isIncome = rbIncome.isChecked
+
+            if (!FinanceUtils.isValidTransaction(category, amount)) {
+                FinanceLogger.warning("Invalid transaction input: category='$category', amount='$amount'")
+                Toast.makeText(this, getString(R.string.invalid_input), Toast.LENGTH_SHORT).show()
+            } else {
+                val validAmount = amount!!
+                if (existing == null) {
+                    db.transactionDao().insert(
+                        Transaction(amount = validAmount, category = category, isIncome = isIncome)
+                    )
+                    FinanceLogger.info("Added transaction: $category ($validAmount, income=$isIncome)")
+                } else {
+                    db.transactionDao().update(
+                        existing.copy(amount = validAmount, category = category, isIncome = isIncome)
+                    )
+                    FinanceLogger.info("Updated transaction: $category ($validAmount, income=$isIncome)")
+                }
+                updateDashboard()
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
     }
 }

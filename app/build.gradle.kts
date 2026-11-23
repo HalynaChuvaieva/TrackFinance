@@ -46,7 +46,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.8.5")
     kapt("androidx.room:room-compiler:2.8.5")
 
-    // Біометрія (відбиток пальця / FaceID)
+    // Біометрія (відбиток пальця)
     implementation("androidx.biometric:biometric:1.1.0")
     // UI компоненти
     implementation("com.google.android.material:material:1.14.0")
