@@ -76,12 +76,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         val cardBudget = findViewById<MaterialCardView>(R.id.cardBudget)
         val rvTransactions = findViewById<RecyclerView>(R.id.rvTransactions)
-        val fabAdd = findViewById<FloatingActionButton>(R.id.fabAddTransaction)
+        val fabAdd = findViewById<View>(R.id.fabAddTransaction)
         val btnLanguage = findViewById<Button>(R.id.btnLanguage)
         val btnTheme = findViewById<Button>(R.id.btnTheme)
         val btnShare = findViewById<Button>(R.id.btnShare)
 
-        // Завантаження налаштувань
         val savedName = prefs.getString("USER_NAME", "User") ?: "User"
         isPrivacyMode = prefs.getBoolean("PRIVACY_MODE", false)
         monthlyBudgetLimit = prefs.getFloat("BUDGET_LIMIT", 1000f).toDouble()

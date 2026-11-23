@@ -78,14 +78,16 @@
                         android:textSize="11sp" />
             </LinearLayout>
 
-            <!-- Градієнтна картка загального балансу -->
+            <!-- Картка загального балансу -->
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardBalance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
+                    android:outlineSpotShadowColor="#0284C7"
+                    android:outlineAmbientShadowColor="#0284C7"
                     app:cardCornerRadius="28dp"
-                    app:cardElevation="8dp"
+                    app:cardElevation="14dp"
                     app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -101,7 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/total_balance"
-                            android:textColor="#E0DCFF"
+                            android:textColor="#E0F2FE"
                             android:textSize="15sp"
                             android:layout_marginBottom="8dp" />
 
@@ -112,7 +114,11 @@
                             android:text="$ 0.00"
                             android:textColor="@android:color/white"
                             android:textSize="38sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:shadowColor="#33000000"
+                            android:shadowDx="0"
+                            android:shadowDy="3"
+                            android:shadowRadius="6" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -222,14 +228,17 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
             android:id="@+id/fabAddTransaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_fab_gradient"
             android:src="@android:drawable/ic_input_add"
             app:tint="@android:color/white"
-            app:backgroundTint="@color/accent_purple" />
+            android:elevation="12dp"
+            android:outlineSpotShadowColor="#5B46E8"
+            android:contentDescription="@string/new_transaction" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
