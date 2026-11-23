@@ -27,12 +27,15 @@
                 android:paddingVertical="36dp">
 
             <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/login_title"
-                    android:textSize="28sp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
-                    android:lineSpacingExtra="4dp"
+                    android:maxLines="1"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="16sp"
+                    app:autoSizeMaxTextSize="23sp"
                     android:textColor="@color/accent_purple"
                     android:layout_marginBottom="28dp" />
 
@@ -92,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:background="@drawable/bg_pill_outline"
-                    android:text="🔒 Біометрія / Biometrics"
+                    android:text="🔒 Відбиток пальця / Fingerprint"
                     android:textAllCaps="false"
                     android:textColor="@color/accent_purple"
                     android:textSize="15sp"
